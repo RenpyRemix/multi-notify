@@ -4,7 +4,7 @@
 
 Want your players to know when important events happen in your game?
 
-![Image of Multiple Notify](explain_images/multi-notify.png?raw=true "Sample")
+![Image of Multiple Notify](explain_images/multi_notify.png?raw=true "Sample")
 
 [![Support me on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=19978585)
 
