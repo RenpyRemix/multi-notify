@@ -1,8 +1,13 @@
 # Multiple Notify
 
-#### Note: All you really need are the two files in [The game folder](game). Just one image and a small script file. They can be dropped into a new or existing project and a sample will run before label start. Alternatively, just clone the lot as a zip from [The Repository Main Page](https://github.com/RenpyRemix/multi-notify)
+#### Note: All you really need are the two files in [The game folder](game). Just one image and a small script file. They can be dropped into a new or existing project and a sample will run before label start. 
+#### Alternatively, just clone the lot as a zip from [The Repository Main Page](https://github.com/RenpyRemix/multi-notify)
 
 Want your players to know when important events happen in your game?
+Want to use the `renpy.notify` system with its associated screen Action?
+
+Want it to do more though? Want multiple notifications on screen at once, want them animating in with ATL and animating out after a set time? Want a stored history of previous notifications?
+
 
 ![Image of Multiple Notify](explain_images/multi_notify.png?raw=true "Sample")
 
