@@ -1,6 +1,6 @@
 # Multiple Notify
 
-#### Note: All you really need are the two files in [The game folder](game). Just one image and a small script file. They can be dropped into a new or existing project and a sample will run before label start.
+#### Note: All you really need are the two files in [The game folder](game). Just one image and a small script file. They can be dropped into a new or existing project and a sample will run before label start. Alternatively, just clone the lot as a zip from [The Repository Main Page](https://github.com/RenpyRemix/multi-notify)
 
 Want your players to know when important events happen in your game?
 
