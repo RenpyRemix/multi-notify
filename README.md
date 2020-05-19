@@ -13,6 +13,12 @@ Want it to do more though? Want multiple notifications on screen at once, want t
 
 [![Support me on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=19978585)
 
+# Multiple Notify in Ren'Py
+
+Not much is required to do this:
+  - Tell Ren'Py to use a different function when notifications occur.
+  - Use that function to add the new notification to a global list (and prune that list if needed).
+  - Show a container screen that displays all the current notifications.
 
 ### Important Reading:
 
