@@ -8,8 +8,9 @@ Want to use the `renpy.notify` system with its associated screen Action?
 
 Want it to do more though? Want multiple notifications on screen at once, want them animating in with ATL and animating out after a set time? Want a stored history of previous notifications?
 
-
 ![Image of Multiple Notify](explain_images/multi_notify.png?raw=true "Sample")
+
+Static image in lieu of animated gif. I use a basic linear yzoom in the ATL so each new notification appears by growing larger, pauses in size (as the previous shrinking ones pull it up screen) then shrinks. This is not nice for creating gifs and results in ridiculously large filesizes. Just picture it a bit like a rotating tyre viewed front on or just download the files and see it in action yourself.
 
 [![Support me on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=19978585)
 
