@@ -1,8 +1,10 @@
-﻿
+﻿# Global list of notifications
 default notify_messages = []
 
+# Duration the full ATL takes
 default notify_duration = 4.0
 
+# Max number we store for reviewing in the history screen
 default notify_history_length = 20
 
 init python:
@@ -18,6 +20,9 @@ init python:
 
         add_time = time.time()
 
+        # Just in case multiple notifications are added really really 
+        # fast, this gives them minorly different time values so do 
+        # not steal displayables meant for other notifications
         if notify_messages and notify_messages[-1][1] >= add_time:
 
             add_time = notify_messages[-1][1] + 0.01
@@ -37,6 +42,7 @@ init python:
 
         if not [k for k in notify_messages if k[1] > max_start]:
 
+            # If the notification list is now empty, hide the screen
             renpy.hide_screen("notify_container")
             renpy.restart_interaction()
 
@@ -48,9 +54,7 @@ style notify_item_frame:
     background Frame("images/notify_frame_background.png", 20, 20)
 
     padding (16, 2, 16, 2)
-
     minimum (40, 40)
-        
     xanchor 0.5
 
 
@@ -67,8 +71,6 @@ style notify_item_text:
 
 
 transform notify_appear():
-
-    # on start, show, replace:
 
     yzoom 0.0 alpha 0.5
 
@@ -87,7 +89,7 @@ screen notify_item(msg, use_atl=True):
 
     frame:
 
-        if use_atl:
+        if use_atl: # ATL not used for history
 
             at notify_appear
 
@@ -107,6 +109,8 @@ screen notify_container():
 
             spacing 5
 
+            # We index on the time the notification was added as that
+            # is unique. Using index helps manage the ATL nicely
             for msg_info index msg_info[1] in notify_messages:
 
                 if msg_info[1] > time.time() - notify_duration:
@@ -154,25 +158,7 @@ label multi_notify_example:
     $ renpy.notify("Third test")
 
     "Now for a loop of Lorem Ipsum... (too fast to read fully)"
-
-    $ lorem_ipsum = """Lorem ipsum dolor sit amet, consectetur adipiscing 
-    elit. Fusce hendrerit nunc et tellus accumsan eleifend. Nunc maximus 
-    ipsum a dictum varius. In bibendum purus vel elit sagittis, ac tincidunt 
-    quam posuere. Nullam ornare venenatis lorem sit amet efficitur. 
-    Vestibulum commodo in arcu ac pellentesque. Vivamus condimentum lacus nec 
-    volutpat bibendum. Sed faucibus vestibulum leo, eu faucibus diam facilisis 
-    sit amet. In metus elit, scelerisque at augue id, tincidunt tempor odio. 
-    Curabitur rutrum tortor in nulla luctus, vel iaculis eros dictum.
-    Vestibulum auctor ex risus, sed vestibulum nisl consectetur mattis. Etiam 
-    lacus magna, sodales vitae faucibus sit amet, laoreet nec elit. Etiam non 
-    cursus justo. Curabitur nisl eros, imperdiet ac semper nec, lacinia et 
-    nibh. Mauris vestibulum eros non ipsum bibendum fringilla. Morbi ut rutrum 
-    libero. Phasellus a tempor nisl. Nulla convallis gravida lorem, sagittis 
-    volutpat nulla rutrum eu. Vivamus ac nulla volutpat, rutrum tellus eu, 
-    finibus eros. Phasellus finibus iaculis libero, eu auctor metus suscipit 
-    vel. Etiam tempor lorem ut facilisis porta. Fusce interdum venenatis 
-    metus, vel laoreet purus. Curabitur semper consequat fermentum. Maecenas 
-    sed eleifend nisl, ac malesuada odio.""".split('.')
+    # lorem_ipsum list defaulted at end of script
 
     $ lorem_idx = 0
 
@@ -205,3 +191,23 @@ label multi_notify_example:
         $ del config.label_overrides['start']
 
     return
+
+
+default lorem_ipsum = """Lorem ipsum dolor sit amet, consectetur adipiscing 
+    elit. Fusce hendrerit nunc et tellus accumsan eleifend. Nunc maximus 
+    ipsum a dictum varius. In bibendum purus vel elit sagittis, ac tincidunt 
+    quam posuere. Nullam ornare venenatis lorem sit amet efficitur. 
+    Vestibulum commodo in arcu ac pellentesque. Vivamus condimentum lacus nec 
+    volutpat bibendum. Sed faucibus vestibulum leo, eu faucibus diam facilisis 
+    sit amet. In metus elit, scelerisque at augue id, tincidunt tempor odio. 
+    Curabitur rutrum tortor in nulla luctus, vel iaculis eros dictum.
+    Vestibulum auctor ex risus, sed vestibulum nisl consectetur mattis. Etiam 
+    lacus magna, sodales vitae faucibus sit amet, laoreet nec elit. Etiam non 
+    cursus justo. Curabitur nisl eros, imperdiet ac semper nec, lacinia et 
+    nibh. Mauris vestibulum eros non ipsum bibendum fringilla. Morbi ut rutrum 
+    libero. Phasellus a tempor nisl. Nulla convallis gravida lorem, sagittis 
+    volutpat nulla rutrum eu. Vivamus ac nulla volutpat, rutrum tellus eu, 
+    finibus eros. Phasellus finibus iaculis libero, eu auctor metus suscipit 
+    vel. Etiam tempor lorem ut facilisis porta. Fusce interdum venenatis 
+    metus, vel laoreet purus. Curabitur semper consequat fermentum. Maecenas 
+    sed eleifend nisl, ac malesuada odio.""".split('.')
