@@ -19,6 +19,9 @@ Not much is required to do this:
   - Tell Ren'Py to use a different function when notifications occur.
   - Use that function to add the new notification to a global list (and prune that list if needed).
   - Show a container screen that displays all the current notifications.
+  - Tweak styles and ATL so everything looks great.
+
+The main part of this is adjusting the styles and ATL. The sample here is very basic and could be changed to suit almost any requirements.
 
 ### Important Reading:
 
