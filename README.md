@@ -4,18 +4,14 @@
 
 Want your players to know when important events happen in your game?
 
-![Image of Multiple Notify](explain_images/multi-notify.gif?raw=true "Sample")
+![Image of Multiple Notify](explain_images/multi-notify.png?raw=true "Sample")
 
 [![Support me on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=19978585)
 
 
 ### Important Reading:
 
-The overview of the system is more fully explained in [Speech Bubbles Overview](explain_screens.md)
-
-The styling and settings for frame backgrounds are explained in [Frames & Styles](explain_frames.md)
-
-The parameters and usage guidelines are explained in [Using the Speech Bubbles system](explain_usage.md)
+The overview of the system is more fully explained in [Multi Notify Overview](explain_overview.md)
 
 ### Please note:
 
