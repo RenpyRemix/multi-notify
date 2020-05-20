@@ -69,7 +69,12 @@ screen notify_container():
                     use notify_item(msg_info[0])
 ```
 Just a pretty standard screen that you can alter so it shows things how you want.  
-The principle part is the for loop and conditional, which cycles through the global `notify_messages` and, if their time value indicates they are currently shown, shows each in its own subscreen
+The principle part is the for loop and conditional, which cycles through the global `notify_messages` and, if their time value indicates they are currently shown, shows each in its own subscreen.
+
+#### Using `index` in the for loop
+
+
+
 ```py
 screen notify_item(msg, use_atl=True):
 
@@ -86,7 +91,14 @@ screen notify_item(msg, use_atl=True):
 
         text msg
 ```
+This subscreen shows each individual notification and can also be altered to reflect the style you want in your game.  
+I used a style prefix to allow named styles with that prefix to apply to both the `frame:` and the `text`.
+One point worth noting is the `use_atl=True` parameter and the `if use_atl:` conditional. Those are so the history screen (which uses these same subscreens) does not fade the notifications away using ATL.  
+You could use different subscreens for the history or tweak things any way you like.
 
+## The ATL
+
+Did you note the `at notify_appear` for the `frame:` in the subscreen? 
 
 
 ### Navigation:
