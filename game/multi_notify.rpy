@@ -21,8 +21,8 @@ init python:
         add_time = time.time()
 
         # Just in case multiple notifications are added really really 
-        # fast, this gives them minorly different time values so do 
-        # not steal displayables meant for other notifications
+        # fast, this gives them minorly different time values so they 
+        # do not steal displayables meant for other notifications
         if notify_messages and notify_messages[-1][1] >= add_time:
 
             add_time = notify_messages[-1][1] + 0.01
