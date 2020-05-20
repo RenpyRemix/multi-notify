@@ -82,6 +82,7 @@ When Ren'Py redraws a screen it will reuse old displayables in order to save tim
 This means that if "Notification #1" has long since faded away and Ren'Py decides to reuse that displayable for "Notification #21" it will be using #1's state. So, it would show the new notification at the end of #1's ATL cycle, all faded away and shrunk to nothing, which we certainly do not want.  
 Using `index` here, with a new unique value that does not match the value of old displayables ensures that each new notification starts its own ATL rather than using an expired/finished one. It makes it so it uses everything fresh.
 
+
 ```py
 screen notify_item(msg, use_atl=True):
 
