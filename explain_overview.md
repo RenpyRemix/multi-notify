@@ -73,7 +73,13 @@ The principle part is the for loop and conditional, which cycles through the glo
 
 #### Using `index` in the for loop
 
-
+Note how that for loop has the index clause in it?
+```py
+            for msg_info index msg_info[1] in notify_messages:
+```
+The keyword `index` tells Ren'Py to identify the ATL and state within each iteration of the loop by that value. The value of each index should be unique and hashable, so a long float works nicely and explains why we went to the trouble of making sure they were unique earlier.
+When Ren'Py redraws a screen it will reuse old displayables in order to save time creating new surfaces. ATL and state relating to those displayables will also be reused rather than refreshed. This means that if "Notification #1" has long since faded away and Ren'Py decides to reuse that displayable for "Notification #21" it will be using #1's state. So, it would show the new notification at the end of its ATL cycle, faded away and shrunk to nothing, which we certainly do not want.
+Using `index` here, with a new unique value that does not match the value of old displayables ensures that each new notification starts its own ATL rather than using an expired/finished one. It makes it so it uses everything fresh.
 
 ```py
 screen notify_item(msg, use_atl=True):
@@ -98,7 +104,41 @@ You could use different subscreens for the history or tweak things any way you l
 
 ## The ATL
 
-Did you note the `at notify_appear` for the `frame:` in the subscreen? 
+Did you note the `at notify_appear` for the `frame:` in the subscreen?  
+Did you read the explanation of `index` in the for loop?
+
+If so, you should be able to surmise that when each new notification is shown it starts running an ATL transform.
+```py
+transform notify_appear():
+
+    yzoom 0.0 alpha 0.5
+
+    linear 1.0 yzoom 1.0 alpha 1.0
+
+    pause 2.0
+
+    linear 1.0 yzoom 0.0 alpha 0.0
+
+    function finish_notify
+```
+The transform there just makes them grow vertically, fade in from transparent, pause for two seconds while the player reads the info then fade and shrink away.  
+You can change that ATL to whatever suits your game best.
+
+The most important part is ending the ATL with the `function finish_notify` which tells it to run the python function after it has finished doing everything else.
+```py
+    def finish_notify(trans, st, at):
+
+        max_start = time.time() - notify_duration
+
+        if not [k for k in notify_messages if k[1] > max_start]:
+
+            # If the notification list is now empty, hide the screen
+            renpy.hide_screen("notify_container")
+            renpy.restart_interaction()
+
+        return None
+```
+Housekeeping; When each notification finishes its ATL we call this function which just checks to see if any notifications are still showing and hides the screen if none are. 
 
 
 ### Navigation:
