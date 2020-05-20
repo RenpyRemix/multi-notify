@@ -77,8 +77,9 @@ Note how that for loop has the index clause in it?
 ```py
             for msg_info index msg_info[1] in notify_messages:
 ```
-The keyword `index` tells Ren'Py to identify the ATL and state within each iteration of the loop by that value. The value of each index should be unique and hashable, so a long float works nicely and explains why we went to the trouble of making sure they were unique earlier.
-When Ren'Py redraws a screen it will reuse old displayables in order to save time creating new surfaces. ATL and state relating to those displayables will also be reused rather than refreshed. This means that if "Notification #1" has long since faded away and Ren'Py decides to reuse that displayable for "Notification #21" it will be using #1's state. So, it would show the new notification at the end of its ATL cycle, faded away and shrunk to nothing, which we certainly do not want.
+The keyword `index` tells Ren'Py to identify the ATL and state within each iteration of the loop by that value. The value of each index should be unique and hashable, so a long float works nicely and explains why we went to the trouble of making sure they were unique earlier.  
+When Ren'Py redraws a screen it will reuse old displayables in order to save time creating new surfaces. The ATL and state relating to those displayables will also be reused rather than refreshed.  
+This means that if "Notification #1" has long since faded away and Ren'Py decides to reuse that displayable for "Notification #21" it will be using #1's state. So, it would show the new notification at the end of #1's ATL cycle, all faded away and shrunk to nothing, which we certainly do not want.  
 Using `index` here, with a new unique value that does not match the value of old displayables ensures that each new notification starts its own ATL rather than using an expired/finished one. It makes it so it uses everything fresh.
 
 ```py
