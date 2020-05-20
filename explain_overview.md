@@ -100,7 +100,7 @@ screen notify_item(msg, use_atl=True):
         text msg
 ```
 This subscreen shows each individual notification and can also be altered to reflect the style you want in your game.  
-I used a style prefix to allow named styles with that prefix to apply to both the `frame:` and the `text`.
+I used a style prefix to allow named styles with that prefix to apply to both the `frame:` and the `text`.  
 One point worth noting is the `use_atl=True` parameter and the `if use_atl:` conditional. Those are so the history screen (which uses these same subscreens) does not fade the notifications away using ATL.  
 You could use different subscreens for the history or tweak things any way you like.
 
