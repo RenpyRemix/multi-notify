@@ -102,7 +102,7 @@ screen notify_item(msg, use_atl=True):
 This subscreen shows each individual notification and can also be altered to reflect the style you want in your game.  
 I used a style prefix to allow named styles with that prefix to apply to both the `frame:` and the `text`.  
 One point worth noting is the `use_atl=True` parameter and the `if use_atl:` conditional. Those are so the history screen (which uses these same subscreens) does not fade the notifications away using ATL.  
-You could use different subscreens for the history or tweak things any way you like.
+You could use different subscreens for the history or tweak things any way you like. Realistically, different subscreens is often easier as you do not have to fight against the style and can allow entirely different styling to be used.
 
 ## The ATL
 
@@ -142,6 +142,10 @@ The most important part is ending the ATL with the `function finish_notify` whic
 ```
 Housekeeping; When each notification finishes its ATL we call this function which just checks to see if any notifications are still showing and hides the screen if none are. 
 
+#### The notify_history Screen
+
+As we are actually storing a list of both current and historic notifications, we can display the items of that list to show the player a History. Nothing very advanced in the sample here, just a viewport and a vbox with the full list of notifications.  
+You could add a button somewhere to show the screen, just remember not to include the fade-in fade-out ATL if you make your own. 
 
 ### Navigation:
 
