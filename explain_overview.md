@@ -36,7 +36,7 @@ Next come our functions:
         renpy.show_screen("notify_container")
         renpy.restart_interaction()
 ```
-This is the function that we told Ren'Py to use instead of the standard `renpy.display_notify` and it behaves in a similar way.
+This is the function that we told Ren'Py to use instead of the standard `renpy.display_notify` and it behaves slightly differently.
 
 First we use `global` to let Python know we are using the global notify_messages list when we come to change its value.  
 Then we determine the time (in float 100/ths of a second since epoch, e.g. 1589982411.26) which we want to be unique for each notification. If that value matches the previous existing one, we add 0.01 to the existing one and use that. This is important and is to make sure each is unique and comes into play later when we are using ATL.
