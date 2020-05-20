@@ -22,8 +22,8 @@ Next come our functions:
         add_time = time.time()
 
         # Just in case multiple notifications are added really really 
-        # fast, this gives them minorly different time values so do 
-        # not steal displayables meant for other notifications
+        # fast, this gives them minorly different time values so they
+        # do not steal displayables meant for other notifications
         if notify_messages and notify_messages[-1][1] >= add_time:
 
             add_time = notify_messages[-1][1] + 0.01
@@ -36,8 +36,116 @@ Next come our functions:
         renpy.show_screen("notify_container")
         renpy.restart_interaction()
 ```
-This is the function that we told Ren'Py to use instead of the standard `renpy.display_notify` and it behaves in a similar way.
+This is the function that we told Ren'Py to use instead of the standard `renpy.display_notify` and it behaves slightly differently.
 
+First we use `global` to let Python know we are using the global notify_messages list when we come to change its value.  
+Then we determine the time (in float hundredths of a second since Epoch, e.g. 1589982411.26) which we want to be unique for each notification. If that value matches the previous existing one, we add 0.01 to the existing one and use that. This is important and is to make sure each is unique, which comes into play later when we are using ATL.
+
+We add our new notification text and the unique time value to the global notify_messages list and then truncate that list to a maximum length to reflect the `notify_history_length` value.
+
+Like the normal Ren'Py function for notifications, we now show a screen (our container screen in this method) and restart the interaction so it is shown.
+
+We will cover the `finish_notify` ATL function later, after detailing;
+
+## The Screens
+
+```py
+screen notify_container():
+
+    fixed:
+
+        pos (0.5, 50)
+
+        vbox:
+
+            spacing 5
+
+            # We index on the time the notification was added as that
+            # is unique. Using index helps manage the ATL nicely
+            for msg_info index msg_info[1] in notify_messages:
+
+                if msg_info[1] > time.time() - notify_duration:
+
+                    use notify_item(msg_info[0])
+```
+Just a pretty standard screen that you can alter so it shows things how you want.  
+The principle part is the for loop and conditional, which cycles through the global `notify_messages` and, if their time value indicates they are currently shown, shows each in its own subscreen.
+
+#### Using `index` in the for loop
+
+Note how that for loop has the index clause in it?
+```py
+            for msg_info index msg_info[1] in notify_messages:
+```
+The keyword `index` tells Ren'Py to identify the ATL and state within each iteration of the loop by that value. The value of each index should be unique and hashable, so a long float works nicely and explains why we went to the trouble of making sure they were unique earlier.  
+When Ren'Py redraws a screen it will reuse old displayables in order to save time creating new surfaces. The ATL and state relating to those displayables will also be reused rather than refreshed.  
+This means that if "Notification #1" has long since faded away and Ren'Py decides to reuse that displayable for "Notification #21" it will be using #1's state. So, it would show the new notification at the end of #1's ATL cycle, all faded away and shrunk to nothing, which we certainly do not want.  
+Using `index` here, with a new unique value that does not match the value of old displayables ensures that each new notification starts its own ATL rather than using an expired/finished one. It makes it so it uses everything fresh.
+
+
+```py
+screen notify_item(msg, use_atl=True):
+
+    style_prefix "notify_item"
+
+    frame:
+
+        if use_atl: # ATL not used for history
+
+            at notify_appear
+
+        else:
+            xpos 0.5
+
+        text msg
+```
+This subscreen shows each individual notification and can also be altered to reflect the style you want in your game.  
+I used a style prefix to allow named styles with that prefix to apply to both the `frame:` and the `text`.  
+One point worth noting is the `use_atl=True` parameter and the `if use_atl:` conditional. Those are so the history screen (which uses these same subscreens) does not fade the notifications away using ATL.  
+You could use different subscreens for the history or tweak things any way you like. Realistically, different subscreens is often easier as you do not have to fight against the style and can allow entirely different styling to be used.
+
+## The ATL
+
+Did you note the `at notify_appear` for the `frame:` in the subscreen?  
+Did you read the explanation of `index` in the for loop?
+
+If so, you should be able to surmise that when each new notification is shown it starts running an ATL transform.
+```py
+transform notify_appear():
+
+    yzoom 0.0 alpha 0.5
+
+    linear 1.0 yzoom 1.0 alpha 1.0
+
+    pause 2.0
+
+    linear 1.0 yzoom 0.0 alpha 0.0
+
+    function finish_notify
+```
+The transform there just makes them grow vertically, fade in from transparent, pause for two seconds while the player reads the info then fade and shrink away.  
+You can change that ATL to whatever suits your game best.
+
+The most important part is ending the ATL with the `function finish_notify` which tells it to run the python function after it has finished doing everything else.
+```py
+    def finish_notify(trans, st, at):
+
+        max_start = time.time() - notify_duration
+
+        if not [k for k in notify_messages if k[1] > max_start]:
+
+            # If the notification list is now empty, hide the screen
+            renpy.hide_screen("notify_container")
+            renpy.restart_interaction()
+
+        return None
+```
+Housekeeping; When each notification finishes its ATL we call this function which just checks to see if any notifications are still showing and hides the screen if none are. 
+
+#### The notify_history Screen
+
+As we are actually storing a list of both current and historic notifications, we can display the items of that list to show the player a History. Nothing very advanced in the sample here, just a viewport and a vbox with the full list of notifications.  
+You could add a button somewhere to show the screen, just remember not to include the fade-in fade-out ATL if you make your own. 
 
 ### Navigation:
 
