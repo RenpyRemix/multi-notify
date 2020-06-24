@@ -138,6 +138,20 @@ screen notify_history():
                 use notify_item(msg_info[0], False)
 
 
+
+            ###########################################
+            #       Once example has been seen:       #
+            #                                         #
+            #    Uncomment the following line and     #
+            #    delete everything after it. Save     #
+            #                                         #
+            ###########################################
+
+# define config.notify = add_notify_message
+
+
+
+
 init python:
 
     # Just for this sample... so it runs
