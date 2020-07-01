@@ -1,25 +1,4 @@
-﻿## To view example in your game add
-##
-##  call multi_notify_example
-##
-## somewhere in your running label script
-
-
-
-            ###########################################
-            #                                         #
-            #           To use in your game           #
-            #                                         #
-            #    Uncomment the following line and     #
-            #    maybe delete the example label at    #
-            #    the end of this file                 #
-            #                                         #
-            ###########################################
-
-# define config.notify = add_notify_message
-
-
-# Global list of notifications
+﻿# Global list of notifications
 default notify_messages = []
 
 # Duration the full ATL takes
@@ -72,11 +51,11 @@ init python:
 
 style notify_item_frame:
 
-    background Frame("images/notify_frame_background.png", 10, 10)
+    background Frame("images/notify_frame_background.png", 20, 20)
 
     padding (16, 2, 16, 2)
-    minimum (20,20)
-    # xanchor 0.5
+    minimum (40, 40)
+    xanchor 0.5
 
 
 style notify_item_text:
@@ -85,8 +64,8 @@ style notify_item_text:
     align (0.5,0.5) 
 
     # just standard font specific stuff
-    color "#FFF"
-    outlines [(abs(2), "#000", abs(0), abs(0))]
+    color "#444"
+    outlines [(abs(2), "#DDD", abs(0), abs(0))]
     # font ""
     size 20
 
@@ -114,8 +93,8 @@ screen notify_item(msg, use_atl=True):
 
             at notify_appear
 
-        # else:
-        #     xpos 0.5
+        else:
+            xpos 0.5
 
         text msg
 
@@ -124,11 +103,10 @@ screen notify_container():
 
     fixed:
 
-        pos (5, 50)
+        pos (0.5, 50)
 
         vbox:
 
-            xmaximum 250
             spacing 5
 
             # We index on the time the notification was added as that
@@ -143,7 +121,9 @@ screen notify_container():
 screen notify_history():
 
     viewport:
-        area (5, 50, 320, 380)
+        xysize (600,380)
+        xalign 0.5
+        ypos 50
         # scrollbars "vertical"
         draggable True
         mousewheel True
@@ -159,15 +139,24 @@ screen notify_history():
 
 
 
-
-
             ###########################################
+            #       Once example has been seen:       #
             #                                         #
-            #    Once you have seen the example you   #
-            #    can delete everything below here     #
+            #    Uncomment the following line and     #
+            #    delete everything after it. Save     #
             #                                         #
             ###########################################
 
+# define config.notify = add_notify_message
+
+
+
+
+init python:
+
+    # Just for this sample... so it runs
+
+    config.label_overrides['start'] = "multi_notify_example"
 
 
 label multi_notify_example:
@@ -182,17 +171,16 @@ label multi_notify_example:
     pause
     $ renpy.notify("Third test")
 
-    "Now for a loop of random notifications... (too fast to read fully)"
-    extend "\nBetter if you do not click while running."
+    "Now for a loop of Lorem Ipsum... (too fast to read fully)"
+    # lorem_ipsum list defaulted at end of script
 
-    $ random_notifications_idx = 0
+    $ lorem_idx = 0
 
-    while random_notifications_idx < len(random_notifications):
+    while lorem_idx < len(lorem_ipsum):
 
-        $ renpy.notify(" ".join(
-            random_notifications[random_notifications_idx].split()))
+        $ renpy.notify(" ".join(lorem_ipsum[lorem_idx].split()))
 
-        $ random_notifications_idx += 1
+        $ lorem_idx += 1
 
         pause 0.35
 
@@ -212,19 +200,28 @@ label multi_notify_example:
     
     $ config.notify = renpy.display_notify
 
+    if "start" in config.label_overrides:
+
+        $ del config.label_overrides['start']
+
     return
 
 
-default random_notifications = """
-    You took 38hp damage.
-    Elf needs food badly.
-    Building complete!
-    You found some evidence.
-    You were too late to save the kittens.
-    Poison damage 3hp plus fatigue.
-    The straps on your chainmail top are almost perished.
-    You found a silver key.
-    You gained one treasure map.
-    The vagabond cleric has healed you fully.
-    You see a shiny coin just peeking from the sand.
-    """.split('\n')
+default lorem_ipsum = """Lorem ipsum dolor sit amet, consectetur adipiscing 
+    elit. Fusce hendrerit nunc et tellus accumsan eleifend. Nunc maximus 
+    ipsum a dictum varius. In bibendum purus vel elit sagittis, ac tincidunt 
+    quam posuere. Nullam ornare venenatis lorem sit amet efficitur. 
+    Vestibulum commodo in arcu ac pellentesque. Vivamus condimentum lacus nec 
+    volutpat bibendum. Sed faucibus vestibulum leo, eu faucibus diam facilisis 
+    sit amet. In metus elit, scelerisque at augue id, tincidunt tempor odio. 
+    Curabitur rutrum tortor in nulla luctus, vel iaculis eros dictum.
+    Vestibulum auctor ex risus, sed vestibulum nisl consectetur mattis. Etiam 
+    lacus magna, sodales vitae faucibus sit amet, laoreet nec elit. Etiam non 
+    cursus justo. Curabitur nisl eros, imperdiet ac semper nec, lacinia et 
+    nibh. Mauris vestibulum eros non ipsum bibendum fringilla. Morbi ut rutrum 
+    libero. Phasellus a tempor nisl. Nulla convallis gravida lorem, sagittis 
+    volutpat nulla rutrum eu. Vivamus ac nulla volutpat, rutrum tellus eu, 
+    finibus eros. Phasellus finibus iaculis libero, eu auctor metus suscipit 
+    vel. Etiam tempor lorem ut facilisis porta. Fusce interdum venenatis 
+    metus, vel laoreet purus. Curabitur semper consequat fermentum. Maecenas 
+    sed eleifend nisl, ac malesuada odio.""".split('.')
