@@ -47,7 +47,8 @@ Like the normal Ren'Py function for notifications, we now show a screen (our con
 
 We will cover the `finish_notify` ATL function later, after detailing;
 
-## The Screens
+## The Screens  
+Note: These are slightly different in the script as I altered it to more closely reflect normal notifications
 
 ```py
 screen notify_container():
