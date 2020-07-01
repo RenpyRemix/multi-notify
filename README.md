@@ -1,6 +1,6 @@
 # Multiple Notify
 
-#### Note: All you really need are the two files in [The game folder](game). Just one image and a small script file. They can be dropped into a new or existing project and a sample will run before label start. 
+#### Note: All you really need are the two files in [The game folder](game). Just one image and a small script file. They can be dropped into a new or existing project and a label called to show an example. (A config setting will need defining to use. Details in the multi_notify.rpy script)
 #### Alternatively, just clone the lot as a zip from [The Repository Main Page](https://github.com/RenpyRemix/multi-notify)
 
 Want your players to know when important events happen in your game?
@@ -11,8 +11,6 @@ Want it to do more though? Want multiple notifications on screen at once, want t
 ![Image of Multiple Notify](explain_images/multi_notify.gif?raw=true "Sample")
 
 Very basic example image (as gif is not great for displaying this type of animation)
-
-[![Support me on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=19978585)
 
 # Multiple Notify in Ren'Py
 
@@ -27,6 +25,8 @@ The main part of this is adjusting the styles and ATL. The sample here is very b
 ### Important Reading:
 
 The overview of the system is more fully explained in [Multi Notify Overview](explain_overview.md)
+
+[![Support me on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=19978585)
 
 ### Please note:
 
