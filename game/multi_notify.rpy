@@ -189,8 +189,7 @@ label multi_notify_example:
 
     while random_notifications_idx < len(random_notifications):
 
-        $ renpy.notify(" ".join(
-            random_notifications[random_notifications_idx].split()))
+        $ renpy.notify(random_notifications[random_notifications_idx])
 
         $ random_notifications_idx += 1
 
@@ -215,16 +214,15 @@ label multi_notify_example:
     return
 
 
-default random_notifications = """
-    You took 38hp damage.
-    Elf needs food badly.
-    Building complete!
-    You found some evidence.
-    You were too late to save the kittens.
-    Poison damage 3hp plus fatigue.
-    The straps on your chainmail top are almost perished.
-    You found a silver key.
-    You gained one treasure map.
-    The vagabond cleric has healed you fully.
-    You see a shiny coin just peeking from the sand.
-    """.split('\n')
+default random_notifications = (
+    "You took 38hp damage.",
+    "Elf needs food badly.",
+    "Building complete!",
+    "You found some evidence.",
+    "You were too late to save the kittens.",
+    "Poison damage 3hp plus fatigue.",
+    "The straps on your chainmail top are almost perished.",
+    "You found a silver key.",
+    "You gained one treasure map.",
+    "The vagabond cleric has healed you fully.",
+    "You see a shiny coin just peeking from the sand.")
